@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"gaming-in-go/entities"
+
 	"github.com/veandco/go-sdl2/sdl"
 )
 
@@ -40,11 +41,29 @@ func main() {
 
 	defer renderer.Destroy()
 
-	player, err := entities.NewPlayer(renderer)
+	player, err := entities.NewPlayer(renderer, screenWidth, screenHeight)
 
 	if err != nil {
 		fmt.Println("Creating player", err)
 		return
+	}
+
+	var enemies []entities.BaseEnemy = make([]entities.BaseEnemy, 20)
+
+	// TODO: CREATE A MONSTERS FACTORY
+	for column := 0; column < 5; column++ {
+		for line := 0; line < 3; line++ {
+			x := (float64(column)/5)*screenWidth + (entities.BaseEnemySize / 2.0)
+			y := float64(line)*entities.BaseEnemySize + (entities.BaseEnemySize / 2.0)
+
+			enemy, err := entities.NewBaseEnemy(renderer, x, y)
+			if err != nil {
+				fmt.Println("Creating enemy", err)
+				return
+			}
+
+			enemies = append(enemies, enemy)
+		}
 	}
 
 	for {
@@ -60,6 +79,11 @@ func main() {
 		renderer.Clear()
 
 		player.Draw(renderer)
+		player.Update()
+
+		for _, enemy := range enemies {
+			enemy.Draw(renderer)
+		}
 
 		renderer.Present()
 	}
