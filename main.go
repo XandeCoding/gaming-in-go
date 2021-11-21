@@ -43,26 +43,19 @@ func main() {
 
 	player := entities.Create(entities.PlayerInstance, renderer, screenWidth, screenHeight)
 
-	if err != nil {
-		fmt.Println("Creating player", err)
-		return
-	}
+	var enemies []entities.Renderable
 
-	var enemies []entities.BasicEnemy = make([]entities.BasicEnemy, 20)
-
-	// TODO: CREATE A MONSTERS FACTORY
 	for column := 0; column < 5; column++ {
 		for line := 0; line < 3; line++ {
 			x := (float64(column)/5)*screenWidth + (entities.BasicEnemySize / 2.0)
 			y := float64(line)*entities.BasicEnemySize + (entities.BasicEnemySize / 2.0)
 
-			enemy, err := entities.NewBasicEnemy(renderer, x, y)
-			if err != nil {
-				fmt.Println("Creating enemy", err)
-				return
+			enemy := entities.Create(entities.BasicEnemyInstance, renderer, x, y)
+			if enemy != nil {
+				fmt.Printf("%T\t", enemy)
+				fmt.Println(enemy)
+				enemies = append(enemies, enemy)
 			}
-
-			enemies = append(enemies, enemy)
 		}
 	}
 
@@ -82,7 +75,7 @@ func main() {
 		entities.Update(player)
 
 		for _, enemy := range enemies {
-			enemy.Draw(renderer)
+			entities.Draw(enemy, renderer)
 		}
 
 		renderer.Present()
