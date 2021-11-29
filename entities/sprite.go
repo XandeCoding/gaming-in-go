@@ -11,11 +11,6 @@ type Sprite struct {
 	x, y    float64
 }
 
-const (
-	SpriteSpeed        = 0.35
-	SpriteSize         = 105
-)
-
 // TODO: MAYBE PUT THIS IN A UTILS FILE
 func textureFromBMP(renderer *sdl.Renderer, filename string) *sdl.Texture {
 	image, err := sdl.LoadBMP("sprites/" + filename)
@@ -37,16 +32,4 @@ func (sprite *Sprite) initialize(renderer *sdl.Renderer, filename string, x, y f
 	sprite.texture = textureFromBMP(renderer, filename)
 	sprite.x = x
 	sprite.y = y
-}
-
-// TODO: MAYBE CREATE ANOTHER INTERFACE TO ACCEPT X AND Y ARGUMENTS AND REMOVE CAST
-func (sprite Sprite) draw(renderer *sdl.Renderer) {
-	x := int32(sprite.x)
-	y := int32(sprite.y)
-
-	renderer.Copy(
-		sprite.texture,
-		&sdl.Rect{X: 0, Y: 0, W: SpriteSize, H: SpriteSize},
-		&sdl.Rect{X: x, Y: y, W: SpriteSize, H: SpriteSize},
-	)
 }

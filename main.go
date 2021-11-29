@@ -47,17 +47,18 @@ func main() {
 
 	for column := 0; column < 5; column++ {
 		for line := 0; line < 3; line++ {
-			x := (float64(column)/5)*screenWidth + (entities.BasicEnemySize / 2.0)
-			y := float64(line)*entities.BasicEnemySize + (entities.BasicEnemySize / 2.0)
+			// TODO: Create struct to create this enemies
+			x := (float64(column)/5)*screenWidth + (105 / 2.0)
+			y := float64(line)*105 + (105 / 2.0)
 
 			enemy := entities.Create(entities.BasicEnemyInstance, renderer, x, y)
 			if enemy != nil {
-				fmt.Printf("%T\t", enemy)
-				fmt.Println(enemy)
 				enemies = append(enemies, enemy)
 			}
 		}
 	}
+
+	entities.InitializePool(renderer)
 
 	for {
 		// TODO: simplify this
@@ -76,6 +77,11 @@ func main() {
 
 		for _, enemy := range enemies {
 			entities.Draw(enemy, renderer)
+		}
+
+		for _, bullet := range entities.BulletPool {
+			entities.Draw(bullet, renderer)
+			entities.Update(bullet)
 		}
 
 		renderer.Present()

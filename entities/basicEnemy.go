@@ -9,8 +9,8 @@ type BasicEnemy struct {
 }
 
 const (
-	BasicEnemySpeed = 0.35
-	BasicEnemySize  = 105
+	basicEnemySpeed = 0.35
+	basicEnemySize  = 105
 )
 
 func (basicEnemy *BasicEnemy) initialize(renderer *sdl.Renderer, x, y float64) {
@@ -20,14 +20,14 @@ func (basicEnemy *BasicEnemy) initialize(renderer *sdl.Renderer, x, y float64) {
 }
 
 func (basicEnemy BasicEnemy) draw(renderer *sdl.Renderer) {
-	x := int32(basicEnemy.sprite.x - BasicEnemySize/2.0)
-	y := int32(basicEnemy.sprite.y - BasicEnemySize/2.0)
+	x := int32(basicEnemy.sprite.x - basicEnemySize/2.0)
+	y := int32(basicEnemy.sprite.y - basicEnemySize/2.0)
 
 	renderer.CopyEx(
 		basicEnemy.sprite.texture,
-		&sdl.Rect{X: 0, Y: 0, W: BasicEnemySize, H: BasicEnemySize},
-		&sdl.Rect{X: x, Y: y, W: BasicEnemySize, H: BasicEnemySize},
-		180, &sdl.Point{X: BasicEnemySize / 2, Y: BasicEnemySize / 2},
+		&sdl.Rect{X: 0, Y: 0, W: basicEnemySize, H: basicEnemySize},
+		&sdl.Rect{X: x, Y: y, W: basicEnemySize, H: basicEnemySize},
+		180, &sdl.Point{X: basicEnemySize / 2, Y: basicEnemySize / 2},
 		sdl.FLIP_NONE,
 	)
 }

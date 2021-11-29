@@ -13,6 +13,7 @@ type Renderable interface {
 const (
 	PlayerInstance     = "PLAYER"
 	BasicEnemyInstance = "BASIC_ENEMY"
+	BulletInstance     = "BULLET"
 )
 
 func Create(renderableName string, renderer *sdl.Renderer, x, y float64) Renderable {
@@ -25,9 +26,15 @@ func Create(renderableName string, renderer *sdl.Renderer, x, y float64) Rendera
 	if renderableName == BasicEnemyInstance {
 		basicEnemy := BasicEnemy{}
 		basicEnemy.initialize(renderer, x, y)
-		// fmt.Println("basicEnemy", basicEnemy)
 		return &basicEnemy
 	}
+
+	if renderableName == BulletInstance {
+		bullet := Bullet{}
+		bullet.initialize(renderer, 0, 0)
+		return &bullet
+	}
+
 	return nil
 }
 
